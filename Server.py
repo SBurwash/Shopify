@@ -1,10 +1,24 @@
 from pymongo import MongoClient
+from PriceScraping import BeerProgram
+import json_encoder
+import jsonpickle
+import json
 
+fileName = "hopsandamltchb.csv"
+ps = BeerProgram(fileName, 2, 6, 7, None)
+ps.readFile()
+
+elements = ps.getElements()
 
 client = MongoClient('localhost', 27017)
 
 
 db = client.pymongo_test
+
+with open('data.txt', 'w') as outfile:
+    for m in elements:
+        frozen = jsonpickle.encode(m)
+        json.dump(frozen, outfile)
 
 posts = db.posts
 post_1 = {
@@ -23,5 +37,3 @@ post_3 = {
     'author': 'Bill'
 }
 
-
-print('Multiple posts: {0}'.format(new_result.inserted_ids))
