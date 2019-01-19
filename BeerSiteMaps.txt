@@ -1,0 +1,16 @@
+Beer site map
+
+Houblon and Malt Chop a barrock
+
+{"_id":"hopsandamltchb","startUrl":["https://choppeabarrock.com/products"],"selectors":[{"id":"categorieLink","type":"SelectorLink","parentSelectors":["_root"],"selector":"a.dropdown-item:nth-of-type(2),a.dropdown-item:nth-of-type(4)","multiple":true,"delay":0},{"id":"ElementLink","type":"SelectorLink","parentSelectors":["categorieLink"],"selector":"a.product-item","multiple":true,"delay":0},{"id":"ItemName","type":"SelectorText","parentSelectors":["ElementLink"],"selector":"h2.name","multiple":false,"regex":"","delay":0},{"id":"ItemPriceAndWeight","type":"SelectorText","parentSelectors":["ElementLink"],"selector":"div.dropdown-item","multiple":true,"regex":"","delay":0}]}
+
+
+Grain Cachette du bootlegger
+
+{"_id":"cdb-grain","startUrl":["http://boutique.cachettedubootlegger.ca/en/grains"],"selectors":[{"id":"ElementLink","type":"SelectorLink","parentSelectors":["_root"],"selector":"a.product-title","multiple":true,"delay":0},{"id":"itemTypeAndWeight","type":"SelectorText","parentSelectors":["ElementLink"],"selector":"h1","multiple":false,"regex":"","delay":0},{"id":"itemPrice","type":"SelectorText","parentSelectors":["ElementLink"],"selector":"strong.price","multiple":false,"regex":"","delay":0}]}
+
+
+Houblon Cachette du bootlegger
+
+{"_id":"cdb-hops","startUrl":["http://boutique.cachettedubootlegger.ca/en/hops"],"selectors":[{"id":"ElementLink","type":"SelectorLink","parentSelectors":["_root"],"selector":"a.product-title","multiple":true,"delay":0},{"id":"itemName-Weight","type":"SelectorText","parentSelectors":["ElementLink"],"selector":"h1","multiple":false,"regex":"","delay":0},{"id":"item Price","type":"SelectorText","parentSelectors":["ElementLink"],"selector":"strong.price","multiple":false,"regex":"","delay":0}]}
+
