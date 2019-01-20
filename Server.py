@@ -1,39 +1,72 @@
-from pymongo import MongoClient
 from PriceScraping import BeerProgram
-import json_encoder
-import jsonpickle
-import json
+from dbCreator import dBCreator
+from flask import Flask
+from flask_restful import Api, Resource, reqparse
 
 fileName = "hopsandamltchb.csv"
 ps = BeerProgram(fileName, 2, 6, 7, None)
-ps.readFile()
 
-elements = ps.getElements()
+dbC = dBCreator(ps)
+dbC.createData()
+data = dbC.data
 
-client = MongoClient('localhost', 27017)
+app = Flask(__name__)
+api = Api(app)
 
 
-db = client.pymongo_test
 
-with open('data.txt', 'w') as outfile:
-    for m in elements:
-        frozen = jsonpickle.encode(m)
-        json.dump(frozen, outfile)
+class BeerServer(Resource):
+    def get(self, name):
+        for user in users:
+            if (name == data["Name"]):
+                return user, 200
+        return users
 
-posts = db.posts
-post_1 = {
-    'title': 'Python and MongoDB',
-    'content': 'PyMongo is fun, you guys',
-    'author': 'Scott'
-}
-post_2 = {
-    'title': 'Virtual Environments',
-    'content': 'Use virtual environments, you guys',
-    'author': 'Scott'
-}
-post_3 = {
-    'title': 'Learning Python',
-    'content': 'Learn Python, it is easy',
-    'author': 'Bill'
-}
 
+    def post(self, name):
+        parser = reqparse.RequestParser()
+        parser.add_argument("Type")
+        parser.add_argument("Price")
+        args = parser.parse_args()
+
+        for d in data:
+            if (name == d["Name"]):
+                return "User with name {} already exists".format(d), 400
+
+        user = {
+            "Type": data["Type"],
+            "Name": name,
+            "Price": data["Price"]
+        }
+        users.append(data)
+        return user, 201
+
+    def put(self, name):
+        parser = reqparse.RequestParser()
+        parser.add_argument("Type")
+        parser.add_argument("Price")
+        args = parser.parse_args()
+
+        for user in users:
+            if (name == user["name"]):
+                user["age"] = args["age"]
+                user["occupation"] = args["occupation"]
+                return user, 200
+
+        user = {
+            "name": name,
+            "age": args["age"],
+            "occupation": args["occupation"]
+        }
+        users.append(user)
+        return user, 201
+
+    def delete(self, name):
+        global users
+        users = [user for user in users if user["name"] != name]
+        return "{} is deleted.".format(name), 200
+
+
+api.add_resource(User, "/user/<string:name>")
+
+app.run(debug=True)
