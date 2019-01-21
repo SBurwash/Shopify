@@ -1,11 +1,17 @@
-#
+
 # import csv as reader
 #
 # data_file = reader.
 #     ("hopsandamltchb.csv")
 # print(data_file[0:2])
 import csv
+
+import pandas as pd
+import chardet
 from BeerElement import BeerElement
+
+
+
 class BeerProgram:
     def __init__(self,fileName, rowType, rowName, rowPrice, rowWeight):
         self.compteur = 0
@@ -39,13 +45,15 @@ class BeerProgram:
         self.elements[name].setPrice(weight, price)
     def readFile(self):
         firstLine = True
-        with open(self.fileName) as f:
+        pd = panda()
 
-            reader = csv.reader(f)
+        pd.read_csv("hopsandamltchb.csv",  encoding=result['encoding'])
+
             for row in reader:
 
                 self.compteur = 0
                 for element in row:
+
                     if not firstLine:
                         if self.compteur == self.rowType:
                             type = element
